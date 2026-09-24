@@ -1,0 +1,175 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-2" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-3" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="280" y="90" />
+              <mxPoint x="100" y="90" />
+            </Array>
+            <mxPoint x="210" y="90" as="sourcePoint" />
+            <mxPoint x="100" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-3" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" value="User logs on" vertex="1">
+          <mxGeometry height="40" width="120" x="280" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-3" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;" value="browse home page" vertex="1">
+          <mxGeometry height="60" width="120" x="40" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-6" parent="WIyWlLk6GJQsqaUBKTNV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="display recipes list" vertex="1">
+          <mxGeometry height="30" width="60" x="80" y="315" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-7" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Cv6citZmTvLGTHIWTILv-3" style="endArrow=classic;html=1;rounded=0;exitX=0.567;exitY=1.033;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Cv6citZmTvLGTHIWTILv-6" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points" />
+            <mxPoint x="220" y="250" as="sourcePoint" />
+            <mxPoint x="250" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-8" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Cv6citZmTvLGTHIWTILv-6" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.042;entryY=0.117;entryDx=0;entryDy=0;entryPerimeter=0;" target="Cv6citZmTvLGTHIWTILv-23" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="390" y="450" as="sourcePoint" />
+            <mxPoint x="105" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-16" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;" value="searches a recipe" vertex="1">
+          <mxGeometry height="60" width="120" x="280" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-17" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-3" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="Cv6citZmTvLGTHIWTILv-16" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="405" y="101" as="sourcePoint" />
+            <mxPoint x="440" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-19" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Cv6citZmTvLGTHIWTILv-16" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="Cv6citZmTvLGTHIWTILv-20" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="390" y="440" as="sourcePoint" />
+            <mxPoint x="400" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-20" parent="WIyWlLk6GJQsqaUBKTNV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Display&amp;nbsp; filtered list" vertex="1">
+          <mxGeometry height="30" width="60" x="310" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-21" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Cv6citZmTvLGTHIWTILv-20" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.608;entryY=0.017;entryDx=0;entryDy=0;entryPerimeter=0;" target="Cv6citZmTvLGTHIWTILv-23" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="390" y="440" as="sourcePoint" />
+            <mxPoint x="400" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-23" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;" value="Recipe detail screen" vertex="1">
+          <mxGeometry height="60" width="120" x="170" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-25" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;" value="add to favorites&amp;nbsp;" vertex="1">
+          <mxGeometry height="50" width="70" x="90" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-26" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Cv6citZmTvLGTHIWTILv-23" style="endArrow=classic;html=1;rounded=0;exitX=0.833;exitY=1.05;exitDx=0;exitDy=0;exitPerimeter=0;" target="Cv6citZmTvLGTHIWTILv-27" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="620" y="550" as="sourcePoint" />
+            <mxPoint x="450" y="610" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-27" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;" value="add or replace from planner" vertex="1">
+          <mxGeometry height="95" width="70" x="240" y="515" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-28" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Cv6citZmTvLGTHIWTILv-23" style="endArrow=classic;html=1;rounded=0;exitX=0.083;exitY=1.05;exitDx=0;exitDy=0;exitPerimeter=0;" target="Cv6citZmTvLGTHIWTILv-25" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="390" y="440" as="sourcePoint" />
+            <mxPoint x="440" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-29" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-3" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0.317;entryY=-0.033;entryDx=0;entryDy=0;entryPerimeter=0;" target="Cv6citZmTvLGTHIWTILv-30" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="390" y="440" as="sourcePoint" />
+            <mxPoint x="520" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-30" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;" value="favorite recipes&amp;nbsp;" vertex="1">
+          <mxGeometry height="60" width="120" x="440" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-34" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Cv6citZmTvLGTHIWTILv-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Cv6citZmTvLGTHIWTILv-33" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-37" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Cv6citZmTvLGTHIWTILv-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Cv6citZmTvLGTHIWTILv-36" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-31" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rhombus;whiteSpace=wrap;html=1;shapeInside=1;" value="is favorites empty?" vertex="1">
+          <mxGeometry height="80" width="80" x="400" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-32" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Cv6citZmTvLGTHIWTILv-30" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Cv6citZmTvLGTHIWTILv-31" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="390" y="440" as="sourcePoint" />
+            <mxPoint x="440" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-41" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Cv6citZmTvLGTHIWTILv-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Cv6citZmTvLGTHIWTILv-40" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-42" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Cv6citZmTvLGTHIWTILv-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Cv6citZmTvLGTHIWTILv-40" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-44" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Cv6citZmTvLGTHIWTILv-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Cv6citZmTvLGTHIWTILv-40" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-46" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Cv6citZmTvLGTHIWTILv-33" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Cv6citZmTvLGTHIWTILv-49" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="530" y="520" />
+            </Array>
+            <mxPoint x="515.25" y="510" as="sourcePoint" />
+            <mxPoint x="584.75" y="540" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-33" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;" value="view favorites list" vertex="1">
+          <mxGeometry height="60" width="120" x="440" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-35" parent="WIyWlLk6GJQsqaUBKTNV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="no&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="480" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-36" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;" value="display empty message" vertex="1">
+          <mxGeometry height="60" width="70" x="520" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-38" parent="WIyWlLk6GJQsqaUBKTNV-1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="yes" vertex="1">
+          <mxGeometry height="30" width="60" x="470" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-40" parent="WIyWlLk6GJQsqaUBKTNV-1" style="whiteSpace=wrap;html=1;rounded=1;" value="recipe detail screen" vertex="1">
+          <mxGeometry height="50" width="60" x="390" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-49" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;" value="remove from favorites" vertex="1">
+          <mxGeometry height="50" width="90" x="500" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-50" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-3" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="Cv6citZmTvLGTHIWTILv-51" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="80" />
+              <mxPoint x="700" y="140" />
+            </Array>
+            <mxPoint x="580" y="430" as="sourcePoint" />
+            <mxPoint x="720" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-65" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Cv6citZmTvLGTHIWTILv-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="700" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-51" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;" value="weekly planner" vertex="1">
+          <mxGeometry height="60" width="120" x="640" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-61" parent="WIyWlLk6GJQsqaUBKTNV-1" style="rounded=1;whiteSpace=wrap;html=1;" value="add, delete or replace recipe from planner" vertex="1">
+          <mxGeometry height="60" width="120" x="640" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="Cv6citZmTvLGTHIWTILv-64" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Cv6citZmTvLGTHIWTILv-33" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" target="Cv6citZmTvLGTHIWTILv-27" value="">
+          <mxGeometry relative="1" width="100" as="geometry">
+            <Array as="points" />
+            <mxPoint x="330" y="500" as="sourcePoint" />
+            <mxPoint x="430" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
