@@ -1,7 +1,13 @@
+// Models for the API Responsew
 export type MealSummary = {
   idMeal: string;
   strMeal: string;
   strMealThumb: string;
+};
+
+export type Ingredient = {
+  name: string;
+  measure: string;
 };
 
 export type Meal = {
@@ -13,6 +19,7 @@ idMeal: string;
   strInstructions: string;
   strYoutube: string | null;
   strSource: string | null;
+  ingredients: Ingredient[];
 };
 
 export type MealSearchResponse = {
@@ -21,4 +28,8 @@ export type MealSearchResponse = {
 
 export type MealFilterResponse = {
   meals: MealSummary[] | null;
+};
+
+export type MealDetailsResponse = {
+  meals: Meal[] | null;
 };
