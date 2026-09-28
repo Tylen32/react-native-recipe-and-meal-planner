@@ -4,9 +4,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { MealDetailsScreen } from "../screens/MealDetailsScreen";
 import { MainTabNavigator } from "./MainTabNavigator";
 import type { RootStackParamList } from "./navigationTypes";
+import { CategoryMealsScreen } from "../screens/CategoryMealsScreen";
 
-const Stack =
-  createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function AppNavigator() {
   return (
@@ -22,6 +22,13 @@ export function AppNavigator() {
           name="MealDetails"
           component={MealDetailsScreen}
           options={{ title: "Meal Details" }}
+        />
+        <Stack.Screen
+          name="CategoryMeals"
+          component={CategoryMealsScreen}
+          options={({ route }) => ({
+            title: route.params.category,
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>

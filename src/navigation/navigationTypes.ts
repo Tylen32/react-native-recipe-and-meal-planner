@@ -1,7 +1,12 @@
 export type RootStackParamList = {
   MainTabs: undefined;
+
   MealDetails: {
     mealId: string;
+  };
+
+  CategoryMeals: {
+    category: string;
   };
 };
 
