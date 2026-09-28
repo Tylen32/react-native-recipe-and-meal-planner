@@ -1,46 +1,103 @@
 import {
   ActivityIndicator,
+  Button,
   Image,
   ScrollView,
   StyleSheet,
   Text,
+  View,
 } from "react-native";
 
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useMealDetails } from "../hooks/useMealDetails";
-import type { RootStackParamList } from "../navigation/navigationTypes";
+import type {
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 
-type MealDetailsScreenProps = NativeStackScreenProps<
+import { useFavorites } from
+  "../context/FavoritesContext";
+
+import { useMealDetails } from
+  "../hooks/useMealDetails";
+
+import type {
   RootStackParamList,
-  "MealDetails"
->;
+} from "../navigation/navigationTypes";
+
+type MealDetailsScreenProps =
+  NativeStackScreenProps<
+    RootStackParamList,
+    "MealDetails"
+  >;
 
 export function MealDetailsScreen({
   route,
 }: MealDetailsScreenProps) {
   const { mealId } = route.params;
-  const { meal, isLoading, error } = useMealDetails(mealId);
+
+  const {
+    meal,
+    isLoading,
+    error: mealError,
+  } = useMealDetails(mealId);
+
+  const {
+    isFavorite,
+    toggleFavorite,
+    error: favoriteError,
+  } = useFavorites();
+
+  const mealIsFavorite = meal
+    ? isFavorite(meal.idMeal)
+    : false;
 
   if (isLoading) {
-    return <ActivityIndicator style={styles.centered} size="large" />;
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" />
+        <Text style={styles.loadingText}>
+          Loading meal...
+        </Text>
+      </View>
+    );
   }
 
-  if (error) {
-    return <Text style={styles.centered}>{error}</Text>;
+  if (mealError) {
+    return (
+      <View style={styles.centered}>
+        <Text style={styles.error}>
+          {mealError}
+        </Text>
+      </View>
+    );
   }
 
   if (!meal) {
-    return <Text style={styles.centered}>Meal not found.</Text>;
+    return (
+      <View style={styles.centered}>
+        <Text>Meal not found.</Text>
+      </View>
+    );
+  }
+
+  function handleFavoritePress() {
+    if (!meal) {
+      return;
+    }
+
+    void toggleFavorite(meal);
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+    >
       <Image
         source={{ uri: meal.strMealThumb }}
         style={styles.image}
       />
 
-      <Text style={styles.title}>{meal.strMeal}</Text>
+      <Text style={styles.title}>
+        {meal.strMeal}
+      </Text>
 
       <Text style={styles.metadata}>
         {meal.strCategory ?? "No category"}
@@ -48,7 +105,28 @@ export function MealDetailsScreen({
         {meal.strArea ?? "Unknown cuisine"}
       </Text>
 
-      <Text style={styles.heading}>Instructions</Text>
+      <View style={styles.favoriteButton}>
+        <Button
+          title={
+            mealIsFavorite
+              ? "Remove from Favorites"
+              : "Add to Favorites"
+          }
+          onPress={handleFavoritePress}
+          color={mealIsFavorite ? "#b00020" : "#d35400"}
+        />
+      </View>
+
+      {favoriteError && (
+        <Text style={styles.error}>
+          {favoriteError}
+        </Text>
+      )}
+
+      <Text style={styles.heading}>
+        Instructions
+      </Text>
+
       <Text style={styles.instructions}>
         {meal.strInstructions}
       </Text>
@@ -62,8 +140,14 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   centered: {
-    marginTop: 60,
-    textAlign: "center",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 24,
+  },
+  loadingText: {
+    color: "#666666",
+    marginTop: 12,
   },
   image: {
     width: "100%",
@@ -80,6 +164,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 8,
   },
+  favoriteButton: {
+    marginTop: 20,
+  },
   heading: {
     fontSize: 22,
     fontWeight: "600",
@@ -89,5 +176,10 @@ const styles = StyleSheet.create({
   instructions: {
     fontSize: 16,
     lineHeight: 24,
+  },
+  error: {
+    color: "#b00020",
+    marginTop: 12,
+    textAlign: "center",
   },
 });

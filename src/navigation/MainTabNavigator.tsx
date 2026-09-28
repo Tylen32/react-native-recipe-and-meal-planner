@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 import { FavoritesScreen } from "../screens/FavoritesScreen";
 import { HomeScreen } from "../screens/HomeScreen";
@@ -17,21 +18,49 @@ export function MainTabNavigator() {
         headerTitleAlign: "center",
         tabBarActiveTintColor: "#d35400",
         tabBarInactiveTintColor: "#777777",
+        tabBarHideOnKeyboard: true,
       }}
     >
       <Tab.Screen
         name="Home"
         component={HomeScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? "home" : "home-outline"}
+              color={color}
+              size={size}
+            />
+          ),
+        }}
       />
 
       <Tab.Screen
         name="Search"
         component={SearchScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? "search" : "search-outline"}
+              color={color}
+              size={size}
+            />
+          ),
+        }}
       />
 
       <Tab.Screen
         name="Favorites"
         component={FavoritesScreen}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? "heart" : "heart-outline"}
+              color={color}
+              size={size}
+            />
+          ),
+        }}
       />
 
       <Tab.Screen
@@ -40,6 +69,17 @@ export function MainTabNavigator() {
         options={{
           title: "Weekly Plan",
           tabBarLabel: "Planner",
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={
+                focused
+                  ? "calendar"
+                  : "calendar-outline"
+              }
+              color={color}
+              size={size}
+            />
+          ),
         }}
       />
     </Tab.Navigator>
