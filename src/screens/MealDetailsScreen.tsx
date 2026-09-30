@@ -13,38 +13,24 @@ import {
   View,
 } from "react-native";
 
-import type {
-  NativeStackScreenProps,
-} from "@react-navigation/native-stack";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-import { useFavorites } from
-  "../context/FavoritesContext";
+import { useFavorites } from "../context/FavoritesContext";
 
-import { useMealPlan } from
-  "../context/MealPlanContext";
+import { useMealPlan } from "../context/MealPlanContext";
 
-import { useMealDetails } from
-  "../hooks/useMealDetails";
+import { useMealDetails } from "../hooks/useMealDetails";
 
-import {
-  DAYS_OF_WEEK,
-  MEAL_SLOTS,
-} from "../models/MealPlan";
+import { DAYS_OF_WEEK, MEAL_SLOTS } from "../models/MealPlan";
 
-import type {
-  DayOfWeek,
-  MealSlot,
-} from "../models/MealPlan";
+import type { DayOfWeek, MealSlot } from "../models/MealPlan";
 
-import type {
+import type { RootStackParamList } from "../navigation/navigationTypes";
+
+type MealDetailsScreenProps = NativeStackScreenProps<
   RootStackParamList,
-} from "../navigation/navigationTypes";
-
-type MealDetailsScreenProps =
-  NativeStackScreenProps<
-    RootStackParamList,
-    "MealDetails"
-  >;
+  "MealDetails"
+>;
 
 function formatDay(day: DayOfWeek): string {
   return day.charAt(0).toUpperCase() + day.slice(1);
@@ -54,28 +40,16 @@ function formatSlot(slot: MealSlot): string {
   return slot.charAt(0).toUpperCase() + slot.slice(1);
 }
 
-export function MealDetailsScreen({
-  route,
-}: MealDetailsScreenProps) {
+export function MealDetailsScreen({ route }: MealDetailsScreenProps) {
   const { mealId } = route.params;
 
-  const [isPlannerVisible, setIsPlannerVisible] =
-    useState(false);
+  const [isPlannerVisible, setIsPlannerVisible] = useState(false);
 
-  const [selectedDay, setSelectedDay] =
-    useState<DayOfWeek | null>(null);
+  const [selectedDay, setSelectedDay] = useState<DayOfWeek | null>(null);
 
-  const {
-    meal,
-    isLoading,
-    error: mealError,
-  } = useMealDetails(mealId);
+  const { meal, isLoading, error: mealError } = useMealDetails(mealId);
 
-  const {
-    isFavorite,
-    toggleFavorite,
-    error: favoriteError,
-  } = useFavorites();
+  const { isFavorite, toggleFavorite, error: favoriteError } = useFavorites();
 
   const {
     getMealForSlot,
@@ -83,9 +57,7 @@ export function MealDetailsScreen({
     error: mealPlanError,
   } = useMealPlan();
 
-  const mealIsFavorite = meal
-    ? isFavorite(meal.idMeal)
-    : false;
+  const mealIsFavorite = meal ? isFavorite(meal.idMeal) : false;
 
   function openPlanner() {
     setSelectedDay(null);
@@ -113,10 +85,7 @@ export function MealDetailsScreen({
     void toggleFavorite(meal);
   }
 
-  async function saveMealToSlot(
-    day: DayOfWeek,
-    slot: MealSlot
-  ) {
+  async function saveMealToSlot(day: DayOfWeek, slot: MealSlot) {
     if (!meal) {
       return;
     }
@@ -131,13 +100,12 @@ export function MealDetailsScreen({
     }
 
     const day = selectedDay;
-    const existingMeal =
-      getMealForSlot(day, slot);
+    const existingMeal = getMealForSlot(day, slot);
 
     if (existingMeal?.idMeal === meal.idMeal) {
       Alert.alert(
         "Already planned",
-        `${meal.strMeal} is already planned for ${formatDay(day)} ${formatSlot(slot)}.`
+        `${meal.strMeal} is already planned for ${formatDay(day)} ${formatSlot(slot)}.`,
       );
 
       closePlanner();
@@ -160,7 +128,7 @@ export function MealDetailsScreen({
               void saveMealToSlot(day, slot);
             },
           },
-        ]
+        ],
       );
 
       return;
@@ -174,9 +142,7 @@ export function MealDetailsScreen({
       <View style={styles.centered}>
         <ActivityIndicator size="large" />
 
-        <Text style={styles.loadingText}>
-          Loading meal...
-        </Text>
+        <Text style={styles.loadingText}>Loading meal...</Text>
       </View>
     );
   }
@@ -184,9 +150,7 @@ export function MealDetailsScreen({
   if (mealError) {
     return (
       <View style={styles.centered}>
-        <Text style={styles.error}>
-          {mealError}
-        </Text>
+        <Text style={styles.error}>{mealError}</Text>
       </View>
     );
   }
@@ -201,17 +165,10 @@ export function MealDetailsScreen({
 
   return (
     <>
-      <ScrollView
-        contentContainerStyle={styles.container}
-      >
-        <Image
-          source={{ uri: meal.strMealThumb }}
-          style={styles.image}
-        />
+      <ScrollView contentContainerStyle={styles.container}>
+        <Image source={{ uri: meal.strMealThumb }} style={styles.image} />
 
-        <Text style={styles.title}>
-          {meal.strMeal}
-        </Text>
+        <Text style={styles.title}>{meal.strMeal}</Text>
 
         <Text style={styles.metadata}>
           {meal.strCategory ?? "No category"}
@@ -222,14 +179,10 @@ export function MealDetailsScreen({
         <View style={styles.buttonContainer}>
           <Button
             title={
-              mealIsFavorite
-                ? "Remove from Favorites"
-                : "Add to Favorites"
+              mealIsFavorite ? "Remove from Favorites" : "Add to Favorites"
             }
             onPress={handleFavoritePress}
-            color={
-              mealIsFavorite ? "#b00020" : "#d35400"
-            }
+            color={mealIsFavorite ? "#b00020" : "#d35400"}
           />
 
           <View style={styles.buttonSpacing} />
@@ -241,25 +194,40 @@ export function MealDetailsScreen({
           />
         </View>
 
-        {favoriteError && (
-          <Text style={styles.error}>
-            {favoriteError}
+        {favoriteError && <Text style={styles.error}>{favoriteError}</Text>}
+
+        {mealPlanError && <Text style={styles.error}>{mealPlanError}</Text>}
+
+        <Text style={styles.heading}>Ingredients</Text>
+
+        {meal.ingredients.length > 0 ? (
+          <View style={styles.ingredientList}>
+            {meal.ingredients.map((ingredient, index) => (
+              <View
+                key={`${ingredient.name}-${index}`}
+                style={[
+                  styles.ingredientRow,
+                  index < meal.ingredients.length - 1 &&
+                    styles.ingredientBorder,
+                ]}
+              >
+                <Text style={styles.ingredientName}>{ingredient.name}</Text>
+
+                <Text style={styles.ingredientMeasure}>
+                  {ingredient.measure || "Amount not specified"}
+                </Text>
+              </View>
+            ))}
+          </View>
+        ) : (
+          <Text style={styles.noIngredients}>
+            Ingredient information is unavailable.
           </Text>
         )}
 
-        {mealPlanError && (
-          <Text style={styles.error}>
-            {mealPlanError}
-          </Text>
-        )}
+        <Text style={styles.heading}>Instructions</Text>
 
-        <Text style={styles.heading}>
-          Instructions
-        </Text>
-
-        <Text style={styles.instructions}>
-          {meal.strInstructions}
-        </Text>
+        <Text style={styles.instructions}>{meal.strInstructions}</Text>
       </ScrollView>
 
       <Modal
@@ -272,29 +240,20 @@ export function MealDetailsScreen({
           <View style={styles.modalContent}>
             {selectedDay === null ? (
               <>
-                <Text style={styles.modalTitle}>
-                  Select a day
-                </Text>
+                <Text style={styles.modalTitle}>Select a day</Text>
 
                 {DAYS_OF_WEEK.map((day) => {
-                  const occupiedSlots =
-                    MEAL_SLOTS.filter(
-                      (slot) =>
-                        getMealForSlot(day, slot) !==
-                        null
-                    ).length;
+                  const occupiedSlots = MEAL_SLOTS.filter(
+                    (slot) => getMealForSlot(day, slot) !== null,
+                  ).length;
 
                   return (
                     <Pressable
                       key={day}
                       style={styles.option}
-                      onPress={() =>
-                        setSelectedDay(day)
-                      }
+                      onPress={() => setSelectedDay(day)}
                     >
-                      <Text style={styles.optionTitle}>
-                        {formatDay(day)}
-                      </Text>
+                      <Text style={styles.optionTitle}>{formatDay(day)}</Text>
 
                       <Text style={styles.optionSubtitle}>
                         {occupiedSlots === 0
@@ -307,37 +266,22 @@ export function MealDetailsScreen({
               </>
             ) : (
               <>
-                <Text style={styles.modalTitle}>
-                  {formatDay(selectedDay)}
-                </Text>
+                <Text style={styles.modalTitle}>{formatDay(selectedDay)}</Text>
 
-                <Text style={styles.modalSubtitle}>
-                  Select a meal slot
-                </Text>
+                <Text style={styles.modalSubtitle}>Select a meal slot</Text>
 
                 {MEAL_SLOTS.map((slot) => {
-                  const existingMeal =
-                    getMealForSlot(
-                      selectedDay,
-                      slot
-                    );
+                  const existingMeal = getMealForSlot(selectedDay, slot);
 
                   return (
                     <Pressable
                       key={slot}
                       style={styles.option}
-                      onPress={() =>
-                        handleSlotSelection(slot)
-                      }
+                      onPress={() => handleSlotSelection(slot)}
                     >
-                      <Text style={styles.optionTitle}>
-                        {formatSlot(slot)}
-                      </Text>
+                      <Text style={styles.optionTitle}>{formatSlot(slot)}</Text>
 
-                      <Text
-                        style={styles.optionSubtitle}
-                        numberOfLines={1}
-                      >
+                      <Text style={styles.optionSubtitle} numberOfLines={1}>
                         {existingMeal
                           ? existingMeal.strMeal
                           : "No meal planned"}
@@ -348,10 +292,7 @@ export function MealDetailsScreen({
               </>
             )}
 
-            <Pressable
-              style={styles.modalAction}
-              onPress={handleModalBack}
-            >
+            <Pressable style={styles.modalAction} onPress={handleModalBack}>
               <Text style={styles.modalActionText}>
                 {selectedDay ? "Back" : "Cancel"}
               </Text>
@@ -461,5 +402,36 @@ const styles = StyleSheet.create({
     color: "#b00020",
     fontSize: 17,
     fontWeight: "600",
+  },
+  ingredientList: {
+    backgroundColor: "#ffffff",
+    borderRadius: 12,
+    paddingHorizontal: 14,
+  },
+
+  ingredientRow: {
+    paddingVertical: 12,
+  },
+
+  ingredientBorder: {
+    borderBottomColor: "#e5e5e5",
+    borderBottomWidth: 1,
+  },
+
+  ingredientName: {
+    fontSize: 16,
+    fontWeight: "600",
+  },
+
+  ingredientMeasure: {
+    color: "#666666",
+    fontSize: 15,
+    marginTop: 3,
+  },
+
+  noIngredients: {
+    color: "#777777",
+    fontSize: 15,
+    fontStyle: "italic",
   },
 });

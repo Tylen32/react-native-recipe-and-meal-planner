@@ -1,5 +1,7 @@
 import type {
+  Ingredient,
   Meal,
+  MealDbMeal,
   MealDetailsResponse,
   MealFilterResponse,
   MealSearchResponse,
@@ -11,7 +13,61 @@ import type {
   MealCategoryResponse,
 } from "../models/MealCategory";
 
-const BASE_URL = "https://www.themealdb.com/api/json/v1/1";
+const BASE_URL =
+  "https://www.themealdb.com/api/json/v1/1";
+
+function extractIngredients(
+  rawMeal: MealDbMeal
+): Ingredient[] {
+  const ingredients: Ingredient[] = [];
+
+  const rawMealRecord =
+    rawMeal as unknown as Record<string, unknown>;
+
+  for (let index = 1; index <= 20; index++) {
+    const rawName =
+      rawMealRecord[`strIngredient${index}`];
+
+    const rawMeasure =
+      rawMealRecord[`strMeasure${index}`];
+
+    const name =
+      typeof rawName === "string"
+        ? rawName.trim()
+        : "";
+
+    const measure =
+      typeof rawMeasure === "string"
+        ? rawMeasure.trim()
+        : "";
+
+    if (name) {
+      ingredients.push({
+        name,
+        measure,
+      });
+    }
+  }
+
+  return ingredients;
+}
+
+function normalizeMeal(
+  rawMeal: MealDbMeal
+): Meal {
+  return {
+    idMeal: rawMeal.idMeal,
+    strMeal: rawMeal.strMeal,
+    strMealThumb: rawMeal.strMealThumb,
+    strCategory: rawMeal.strCategory,
+    strArea: rawMeal.strArea,
+    strInstructions:
+      rawMeal.strInstructions?.trim() ?? "",
+    strYoutube: rawMeal.strYoutube,
+    strSource: rawMeal.strSource,
+    ingredients: extractIngredients(rawMeal),
+  };
+}
 
 export async function searchMealsByName(
   searchTerm: string
@@ -27,12 +83,15 @@ export async function searchMealsByName(
   );
 
   if (!response.ok) {
-    throw new Error(`Meal search failed: ${response.status}`);
+    throw new Error(
+      `Meal search failed: ${response.status}`
+    );
   }
 
-  const data = (await response.json()) as MealSearchResponse;
+  const data =
+    (await response.json()) as MealSearchResponse;
 
-  return data.meals ?? [];
+  return data.meals?.map(normalizeMeal) ?? [];
 }
 
 export async function getMealById(
@@ -50,17 +109,22 @@ export async function getMealById(
 
   if (!response.ok) {
     throw new Error(
-      `Meal lookup failed with status ${response.status}`
+      `Meal lookup failed: ${response.status}`
     );
   }
 
   const data =
     (await response.json()) as MealDetailsResponse;
 
-  return data.meals?.[0] ?? null;
+  const rawMeal = data.meals?.[0];
+
+  if (!rawMeal) {
+    return null;
+  }
+
+  return normalizeMeal(rawMeal);
 }
 
-// Get Meal Category
 export async function getMealCategories():
 Promise<MealCategory[]> {
   const response = await fetch(
@@ -104,3 +168,27 @@ export async function filterMealsByCategory(
   return data.meals ?? [];
 }
 
+export async function filterMealsByIngredient(
+  ingredient: string
+): Promise<MealSummary[]> {
+  const cleanedIngredient = ingredient.trim();
+
+  if (!cleanedIngredient) {
+    return [];
+  }
+
+  const response = await fetch(
+    `${BASE_URL}/filter.php?i=${encodeURIComponent(cleanedIngredient)}`
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `Ingredient filter failed: ${response.status}`
+    );
+  }
+
+  const data =
+    (await response.json()) as MealFilterResponse;
+
+  return data.meals ?? [];
+}
