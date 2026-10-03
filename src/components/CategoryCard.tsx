@@ -10,6 +10,14 @@ import type {
   MealCategory,
 } from "../models/MealCategory";
 
+import {
+  colors,
+  fontSize,
+  radius,
+  shadows,
+  spacing,
+} from "../theme/theme";
+
 type CategoryCardProps = {
   category: MealCategory;
   onPress: () => void;
@@ -38,46 +46,67 @@ export function CategoryCard({
           }}
           style={styles.image}
           resizeMode="contain"
+          accessible={false}
         />
       </View>
 
-      <Text
-        style={styles.name}
-        numberOfLines={1}
-      >
-        {category.strCategory}
-      </Text>
+      <View style={styles.content}>
+        <Text
+          style={styles.name}
+          numberOfLines={1}
+        >
+          {category.strCategory}
+        </Text>
+      </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#ffffff",
-    borderRadius: 14,
-    marginRight: 12,
+    backgroundColor: colors.surface,
+    borderRadius: radius.lg,
+    marginRight: spacing.md,
     overflow: "hidden",
-    width: 140,
+    width: 145,
+
+    ...shadows.card,
   },
+
   pressed: {
-    opacity: 0.7,
+    opacity: 0.85,
+    transform: [
+      {
+        scale: 0.98,
+      },
+    ],
   },
+
   imageContainer: {
     alignItems: "center",
-    backgroundColor: "#f8f8f8",
-    height: 105,
+    backgroundColor: colors.surfaceMuted,
+    height: 110,
     justifyContent: "center",
-    padding: 8,
+    padding: spacing.sm,
   },
+
   image: {
     height: "100%",
     width: "100%",
   },
+
+  content: {
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 48,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.md,
+  },
+
   name: {
-    fontSize: 16,
+    color: colors.text,
+    fontSize: fontSize.body,
     fontWeight: "600",
-    paddingHorizontal: 10,
-    paddingVertical: 12,
     textAlign: "center",
   },
 });

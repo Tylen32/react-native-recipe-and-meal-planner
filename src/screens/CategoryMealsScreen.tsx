@@ -1,15 +1,20 @@
 import {
   ActivityIndicator,
   FlatList,
-  Pressable,
   StyleSheet,
   Text,
   View,
 } from "react-native";
 
+import Ionicons from
+  "@expo/vector-icons/Ionicons";
+
 import type {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+
+import { AppButton } from
+  "../components/AppButton";
 
 import { MealCard } from
   "../components/MealCard";
@@ -20,6 +25,13 @@ import { useCategoryMeals } from
 import type {
   RootStackParamList,
 } from "../navigation/navigationTypes";
+
+import {
+  colors,
+  fontSize,
+  radius,
+  spacing,
+} from "../theme/theme";
 
 type CategoryMealsScreenProps =
   NativeStackScreenProps<
@@ -48,10 +60,13 @@ export function CategoryMealsScreen({
 
   if (isLoading) {
     return (
-      <View style={styles.centered}>
-        <ActivityIndicator size="large" />
+      <View style={styles.stateContainer}>
+        <ActivityIndicator
+          color={colors.primary}
+          size="large"
+        />
 
-        <Text style={styles.message}>
+        <Text style={styles.stateMessage}>
           Loading {category} meals...
         </Text>
       </View>
@@ -60,33 +75,45 @@ export function CategoryMealsScreen({
 
   if (error) {
     return (
-      <View style={styles.centered}>
-        <Text style={styles.error}>
+      <View style={styles.stateContainer}>
+        <View style={styles.stateIcon}>
+          <Ionicons
+            name="alert-circle-outline"
+            color={colors.error}
+            size={32}
+          />
+        </View>
+
+        <Text style={styles.errorText}>
           {error}
         </Text>
 
-        <Pressable
-          style={styles.retryButton}
-          onPress={() =>
-            void reloadCategoryMeals()
-          }
-        >
-          <Text style={styles.retryButtonText}>
-            Try Again
-          </Text>
-        </Pressable>
+        <AppButton
+          title="Try Again"
+          variant="outline"
+          onPress={reloadCategoryMeals}
+          style={styles.stateButton}
+        />
       </View>
     );
   }
 
   if (meals.length === 0) {
     return (
-      <View style={styles.centered}>
-        <Text style={styles.emptyTitle}>
+      <View style={styles.stateContainer}>
+        <View style={styles.stateIcon}>
+          <Ionicons
+            name="restaurant-outline"
+            color={colors.primary}
+            size={32}
+          />
+        </View>
+
+        <Text style={styles.stateTitle}>
           No meals found
         </Text>
 
-        <Text style={styles.message}>
+        <Text style={styles.stateMessage}>
           There are currently no meals in the{" "}
           {category} category.
         </Text>
@@ -96,10 +123,16 @@ export function CategoryMealsScreen({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.resultsText}>
-        {meals.length}{" "}
-        {meals.length === 1 ? "meal" : "meals"}
-      </Text>
+      <View style={styles.summary}>
+        <Text style={styles.summaryTitle}>
+          {category}
+        </Text>
+
+        <Text style={styles.resultsText}>
+          {meals.length}{" "}
+          {meals.length === 1 ? "meal" : "meals"}
+        </Text>
+      </View>
 
       <FlatList
         data={meals}
@@ -121,49 +154,72 @@ export function CategoryMealsScreen({
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.background,
     flex: 1,
-    backgroundColor: "#f4f4f4",
-    paddingHorizontal: 16,
+    paddingHorizontal: spacing.lg,
   },
-  centered: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 24,
+
+  summary: {
+    paddingBottom: spacing.md,
+    paddingTop: spacing.lg,
   },
+
+  summaryTitle: {
+    color: colors.text,
+    fontSize: fontSize.sectionTitle,
+    fontWeight: "700",
+  },
+
   resultsText: {
-    color: "#666666",
+    color: colors.textSecondary,
     fontSize: 15,
-    paddingTop: 16,
+    marginTop: spacing.xs,
   },
+
   list: {
-    paddingBottom: 30,
-    paddingTop: 12,
+    paddingBottom: spacing.xxl,
   },
-  message: {
-    color: "#666666",
+
+  stateContainer: {
+    alignItems: "center",
+    backgroundColor: colors.background,
+    flex: 1,
+    justifyContent: "center",
+    padding: spacing.xl,
+  },
+
+  stateIcon: {
+    alignItems: "center",
+    backgroundColor: colors.surfaceMuted,
+    borderRadius: radius.pill,
+    height: 62,
+    justifyContent: "center",
+    marginBottom: spacing.md,
+    width: 62,
+  },
+
+  stateTitle: {
+    color: colors.text,
+    fontSize: fontSize.sectionTitle,
+    fontWeight: "700",
+    textAlign: "center",
+  },
+
+  stateMessage: {
+    color: colors.textSecondary,
     lineHeight: 21,
-    marginTop: 8,
+    marginTop: spacing.sm,
     textAlign: "center",
   },
-  error: {
-    color: "#b00020",
-    fontSize: 16,
+
+  errorText: {
+    color: colors.error,
+    fontSize: fontSize.body,
     textAlign: "center",
   },
-  emptyTitle: {
-    fontSize: 22,
-    fontWeight: "bold",
-  },
-  retryButton: {
-    backgroundColor: "#d35400",
-    borderRadius: 8,
-    marginTop: 16,
-    paddingHorizontal: 18,
-    paddingVertical: 10,
-  },
-  retryButtonText: {
-    color: "#ffffff",
-    fontWeight: "600",
+
+  stateButton: {
+    marginTop: spacing.lg,
+    minWidth: 140,
   },
 });

@@ -6,6 +6,9 @@ import {
   View,
 } from "react-native";
 
+import Ionicons from
+  "@expo/vector-icons/Ionicons";
+
 import {
   MEAL_SLOTS,
 } from "../models/MealPlan";
@@ -15,6 +18,14 @@ import type {
   DayOfWeek,
   MealSlot,
 } from "../models/MealPlan";
+
+import {
+  colors,
+  fontSize,
+  radius,
+  shadows,
+  spacing,
+} from "../theme/theme";
 
 type DayMealCardProps = {
   day: DayOfWeek;
@@ -54,6 +65,7 @@ export function DayMealCard({
             key={slot}
             style={[
               styles.slotContainer,
+
               index < MEAL_SLOTS.length - 1 &&
                 styles.slotBorder,
             ]}
@@ -65,9 +77,16 @@ export function DayMealCard({
             {meal ? (
               <View style={styles.mealRow}>
                 <Pressable
-                  style={styles.mealButton}
+                  style={({ pressed }) => [
+                    styles.mealButton,
+                    pressed && styles.pressed,
+                  ]}
                   onPress={() =>
                     onMealPress(meal.idMeal)
+                  }
+                  accessibilityRole="button"
+                  accessibilityLabel={
+                    `Open ${meal.strMeal}`
                   }
                 >
                   <Image
@@ -75,6 +94,7 @@ export function DayMealCard({
                       uri: meal.strMealThumb,
                     }}
                     style={styles.image}
+                    accessible={false}
                   />
 
                   <Text
@@ -83,23 +103,46 @@ export function DayMealCard({
                   >
                     {meal.strMeal}
                   </Text>
+
+                  <Ionicons
+                    name="chevron-forward"
+                    color={colors.textSecondary}
+                    size={19}
+                  />
                 </Pressable>
 
                 <Pressable
-                  style={styles.removeButton}
+                  style={({ pressed }) => [
+                    styles.removeButton,
+                    pressed && styles.pressed,
+                  ]}
                   onPress={() =>
                     onRemove(day, slot)
                   }
+                  accessibilityRole="button"
+                  accessibilityLabel={
+                    `Remove ${meal.strMeal} from ${formatDay(day)} ${formatSlot(slot)}`
+                  }
                 >
-                  <Text style={styles.removeText}>
-                    Remove
-                  </Text>
+                  <Ionicons
+                    name="trash-outline"
+                    color={colors.error}
+                    size={20}
+                  />
                 </Pressable>
               </View>
             ) : (
-              <Text style={styles.emptyText}>
-                No meal planned
-              </Text>
+              <View style={styles.emptySlot}>
+                <Ionicons
+                  name="restaurant-outline"
+                  color={colors.textSecondary}
+                  size={18}
+                />
+
+                <Text style={styles.emptyText}>
+                  No meal planned
+                </Text>
+              </View>
             )}
           </View>
         );
@@ -110,64 +153,89 @@ export function DayMealCard({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#ffffff",
-    borderRadius: 12,
-    marginBottom: 16,
-    padding: 14,
+    backgroundColor: colors.surface,
+    borderRadius: radius.lg,
+    marginBottom: spacing.lg,
+    padding: spacing.lg,
+
+    ...shadows.card,
   },
+
   dayTitle: {
-    fontSize: 21,
-    fontWeight: "bold",
-    marginBottom: 4,
+    color: colors.text,
+    fontSize: fontSize.sectionTitle,
+    fontWeight: "700",
+    marginBottom: spacing.xs,
   },
+
   slotContainer: {
-    paddingVertical: 12,
+    paddingVertical: spacing.md,
   },
+
   slotBorder: {
-    borderBottomColor: "#e2e2e2",
+    borderBottomColor: colors.border,
     borderBottomWidth: 1,
   },
+
   slotTitle: {
-    color: "#555555",
-    fontSize: 14,
-    fontWeight: "600",
-    marginBottom: 8,
+    color: colors.textSecondary,
+    fontSize: fontSize.caption,
+    fontWeight: "700",
+    marginBottom: spacing.sm,
     textTransform: "uppercase",
   },
+
   mealRow: {
     alignItems: "center",
     flexDirection: "row",
   },
+
   mealButton: {
     alignItems: "center",
     flex: 1,
     flexDirection: "row",
+    minHeight: 60,
   },
+
   image: {
-    borderRadius: 8,
-    height: 60,
-    width: 60,
+    backgroundColor: colors.surfaceMuted,
+    borderRadius: radius.sm,
+    height: 58,
+    width: 58,
   },
+
   mealName: {
+    color: colors.text,
     flex: 1,
-    fontSize: 16,
+    fontSize: fontSize.body,
     fontWeight: "500",
-    marginLeft: 12,
+    marginHorizontal: spacing.md,
   },
+
   removeButton: {
-    marginLeft: 8,
-    paddingHorizontal: 6,
-    paddingVertical: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: spacing.xs,
+    minHeight: 44,
+    minWidth: 44,
   },
-  removeText: {
-    color: "#b00020",
-    fontSize: 14,
-    fontWeight: "600",
+
+  emptySlot: {
+    alignItems: "center",
+    backgroundColor: colors.surfaceMuted,
+    borderRadius: radius.sm,
+    flexDirection: "row",
+    minHeight: 48,
+    paddingHorizontal: spacing.md,
   },
+
   emptyText: {
-    color: "#888888",
-    fontSize: 15,
+    color: colors.textSecondary,
     fontStyle: "italic",
-    paddingVertical: 6,
+    marginLeft: spacing.sm,
+  },
+
+  pressed: {
+    opacity: 0.65,
   },
 });

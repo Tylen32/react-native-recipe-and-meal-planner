@@ -1,7 +1,6 @@
 import {
   ActivityIndicator,
   FlatList,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -23,6 +22,9 @@ import type {
   NativeStackNavigationProp,
 } from "@react-navigation/native-stack";
 
+import { AppButton } from
+  "../components/AppButton";
+
 import { CategoryCard } from
   "../components/CategoryCard";
 
@@ -36,6 +38,12 @@ import type {
   BottomTabParamList,
   RootStackParamList,
 } from "../navigation/navigationTypes";
+
+import {
+  colors,
+  fontSize,
+  spacing,
+} from "../theme/theme";
 
 type HomeNavigation = CompositeNavigationProp<
   BottomTabNavigationProp<
@@ -89,19 +97,28 @@ export function HomeScreen() {
         </Text>
       </View>
 
-      <TodaysMealPlan
-        onMealPress={handleMealPress}
-        onFindMeals={handleFindMeals}
-      />
+      <View style={styles.todaySection}>
+        <TodaysMealPlan
+          onMealPress={handleMealPress}
+          onFindMeals={handleFindMeals}
+        />
+      </View>
 
       <View style={styles.categorySection}>
         <Text style={styles.sectionTitle}>
           Browse Categories
         </Text>
 
+        <Text style={styles.sectionSubtitle}>
+          Find your next meal by category.
+        </Text>
+
         {categoriesAreLoading && (
           <View style={styles.categoryLoading}>
-            <ActivityIndicator size="small" />
+            <ActivityIndicator
+              color={colors.primary}
+              size="small"
+            />
 
             <Text style={styles.loadingText}>
               Loading categories...
@@ -116,18 +133,12 @@ export function HomeScreen() {
                 {categoriesError}
               </Text>
 
-              <Pressable
+              <AppButton
+                title="Try Again"
+                variant="outline"
+                onPress={reloadCategories}
                 style={styles.retryButton}
-                onPress={() =>
-                  void reloadCategories()
-                }
-              >
-                <Text
-                  style={styles.retryButtonText}
-                >
-                  Try Again
-                </Text>
-              </Pressable>
+              />
             </View>
           )}
 
@@ -135,7 +146,7 @@ export function HomeScreen() {
           !categoriesError &&
           categories.length === 0 && (
             <Text style={styles.emptyText}>
-              No categories are available.
+              No categories are currently available.
             </Text>
           )}
 
@@ -172,70 +183,91 @@ export function HomeScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#f4f4f4",
+    backgroundColor: colors.background,
   },
+
   content: {
-    paddingBottom: 40,
-    paddingTop: 16,
+    paddingBottom: spacing.xxl,
+    paddingTop: spacing.lg,
   },
+
   introduction: {
-    marginBottom: 20,
-    paddingHorizontal: 16,
+    marginBottom: spacing.xl,
+    paddingHorizontal: spacing.lg,
   },
+
   title: {
-    fontSize: 30,
-    fontWeight: "bold",
+    color: colors.text,
+    fontSize: fontSize.screenTitle,
+    fontWeight: "700",
+    lineHeight: 36,
   },
+
   subtitle: {
-    color: "#666666",
-    fontSize: 16,
-    lineHeight: 22,
-    marginTop: 6,
+    color: colors.textSecondary,
+    fontSize: fontSize.body,
+    lineHeight: 23,
+    marginTop: spacing.sm,
   },
+
+  todaySection: {
+    paddingHorizontal: spacing.lg,
+  },
+
   categorySection: {
-    marginTop: 28,
+    marginTop: spacing.xxl,
   },
+
   sectionTitle: {
-    fontSize: 22,
-    fontWeight: "bold",
-    marginBottom: 12,
-    paddingHorizontal: 16,
+    color: colors.text,
+    fontSize: fontSize.sectionTitle,
+    fontWeight: "700",
+    paddingHorizontal: spacing.lg,
   },
+
+  sectionSubtitle: {
+    color: colors.textSecondary,
+    fontSize: 15,
+    marginBottom: spacing.lg,
+    marginTop: spacing.xs,
+    paddingHorizontal: spacing.lg,
+  },
+
   categoryList: {
-    paddingHorizontal: 16,
+    paddingBottom: spacing.sm,
+    paddingHorizontal: spacing.lg,
   },
+
   categoryLoading: {
     alignItems: "center",
     flexDirection: "row",
-    paddingHorizontal: 16,
-    paddingVertical: 20,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.xl,
   },
+
   loadingText: {
-    color: "#666666",
-    marginLeft: 10,
+    color: colors.textSecondary,
+    marginLeft: spacing.sm,
   },
+
   categoryError: {
     alignItems: "center",
-    paddingHorizontal: 24,
-    paddingVertical: 20,
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.lg,
   },
+
   errorText: {
-    color: "#b00020",
+    color: colors.error,
     textAlign: "center",
   },
+
   retryButton: {
-    backgroundColor: "#d35400",
-    borderRadius: 8,
-    marginTop: 12,
-    paddingHorizontal: 18,
-    paddingVertical: 10,
+    marginTop: spacing.lg,
+    minWidth: 140,
   },
-  retryButtonText: {
-    color: "#ffffff",
-    fontWeight: "600",
-  },
+
   emptyText: {
-    color: "#777777",
-    paddingHorizontal: 16,
+    color: colors.textSecondary,
+    paddingHorizontal: spacing.lg,
   },
 });

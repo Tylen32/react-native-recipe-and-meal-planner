@@ -8,6 +8,9 @@ import {
   View,
 } from "react-native";
 
+import Ionicons from
+  "@expo/vector-icons/Ionicons";
+
 import { useNavigation } from
   "@react-navigation/native";
 
@@ -34,6 +37,12 @@ import type {
 import type {
   RootStackParamList,
 } from "../navigation/navigationTypes";
+
+import {
+  colors,
+  fontSize,
+  spacing,
+} from "../theme/theme";
 
 type WeeklyPlanNavigation =
   NativeStackNavigationProp<RootStackParamList>;
@@ -127,7 +136,10 @@ export function WeeklyPlanScreen() {
   if (isLoading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator
+          color={colors.primary}
+          size="large"
+        />
 
         <Text style={styles.loadingText}>
           Loading weekly plan...
@@ -157,15 +169,41 @@ export function WeeklyPlanScreen() {
 
         {hasPlannedMeals && (
           <Pressable
-            style={styles.clearButton}
+            style={({ pressed }) => [
+              styles.clearButton,
+              pressed && styles.pressed,
+            ]}
             onPress={handleClearPlan}
+            accessibilityRole="button"
+            accessibilityLabel="Clear weekly meal plan"
           >
+            <Ionicons
+              name="trash-outline"
+              color={colors.error}
+              size={18}
+            />
+
             <Text style={styles.clearButtonText}>
               Clear
             </Text>
           </Pressable>
         )}
       </View>
+
+      {!hasPlannedMeals && !error && (
+        <View style={styles.emptyBanner}>
+          <Ionicons
+            name="calendar-outline"
+            color={colors.primary}
+            size={24}
+          />
+
+          <Text style={styles.emptyBannerText}>
+            Your week is empty. Add meals from a
+            recipe’s details page.
+          </Text>
+        </View>
+      )}
 
       <FlatList
         data={DAYS_OF_WEEK}
@@ -188,55 +226,90 @@ export function WeeklyPlanScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f4f4f4",
-    paddingHorizontal: 16,
+    backgroundColor: colors.background,
+    paddingHorizontal: spacing.lg,
   },
+
   centered: {
-    flex: 1,
     alignItems: "center",
+    backgroundColor: colors.background,
+    flex: 1,
     justifyContent: "center",
-    padding: 24,
+    padding: spacing.xl,
   },
+
   loadingText: {
-    color: "#666666",
-    marginTop: 12,
+    color: colors.textSecondary,
+    marginTop: spacing.md,
   },
+
   error: {
-    color: "#b00020",
-    marginTop: 12,
+    color: colors.error,
+    marginTop: spacing.md,
     textAlign: "center",
   },
+
   header: {
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingBottom: 8,
-    paddingTop: 16,
+    paddingBottom: spacing.md,
+    paddingTop: spacing.lg,
   },
+
   headerTextContainer: {
     flex: 1,
   },
+
   title: {
+    color: colors.text,
     fontSize: 26,
-    fontWeight: "bold",
+    fontWeight: "700",
   },
+
   subtitle: {
-    color: "#666666",
+    color: colors.textSecondary,
     fontSize: 15,
-    marginTop: 3,
+    marginTop: spacing.xs,
   },
+
   clearButton: {
-    marginLeft: 12,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    alignItems: "center",
+    flexDirection: "row",
+    marginLeft: spacing.md,
+    minHeight: 44,
+    paddingHorizontal: spacing.sm,
   },
+
   clearButtonText: {
-    color: "#b00020",
+    color: colors.error,
     fontSize: 15,
     fontWeight: "600",
+    marginLeft: spacing.xs,
   },
+
+  pressed: {
+    opacity: 0.6,
+  },
+
+  emptyBanner: {
+    alignItems: "center",
+    backgroundColor: colors.surfaceMuted,
+    borderRadius: 12,
+    flexDirection: "row",
+    marginBottom: spacing.sm,
+    padding: spacing.md,
+  },
+
+  emptyBannerText: {
+    color: colors.textSecondary,
+    flex: 1,
+    lineHeight: 20,
+    marginLeft: spacing.md,
+  },
+
   list: {
-    paddingBottom: 30,
-    paddingTop: 8,
+    paddingBottom: spacing.xxl,
+    paddingTop: spacing.sm,
   },
 });

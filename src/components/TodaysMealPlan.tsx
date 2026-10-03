@@ -7,6 +7,9 @@ import {
   View,
 } from "react-native";
 
+import Ionicons from
+  "@expo/vector-icons/Ionicons";
+
 import { useMealPlan } from
   "../context/MealPlanContext";
 
@@ -19,9 +22,19 @@ import type {
 } from "../models/MealPlan";
 
 import {
+  colors,
+  fontSize,
+  radius,
+  shadows,
+  spacing,
+} from "../theme/theme";
+
+import {
   formatDayOfWeek,
   getDayOfWeek,
 } from "../utils/date";
+
+import { AppButton } from "./AppButton";
 
 type TodaysMealPlanProps = {
   onMealPress: (mealId: string) => void;
@@ -62,15 +75,30 @@ export function TodaysMealPlan({
           </Text>
         </View>
 
-        <Pressable onPress={onFindMeals}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.findMealsLink,
+            pressed && styles.pressed,
+          ]}
+          onPress={onFindMeals}
+          accessibilityRole="button"
+          accessibilityLabel="Find meals"
+        >
           <Text style={styles.findMealsText}>
             Find meals
           </Text>
+
+          <Ionicons
+            name="arrow-forward"
+            color={colors.primary}
+            size={17}
+          />
         </Pressable>
       </View>
 
       {isLoading ? (
         <ActivityIndicator
+          color={colors.primary}
           size="small"
           style={styles.loading}
         />
@@ -84,23 +112,28 @@ export function TodaysMealPlan({
 
           {!hasPlannedMeals && (
             <View style={styles.emptyContainer}>
+              <View style={styles.emptyIcon}>
+                <Ionicons
+                  name="calendar-outline"
+                  color={colors.primary}
+                  size={30}
+                />
+              </View>
+
               <Text style={styles.emptyTitle}>
                 Nothing planned for today
               </Text>
 
               <Text style={styles.emptyMessage}>
-                Find a meal and add it to your
-                breakfast, lunch, or dinner.
+                Find a meal and add it to breakfast,
+                lunch, or dinner.
               </Text>
 
-              <Pressable
-                style={styles.findButton}
+              <AppButton
+                title="Find a Meal"
                 onPress={onFindMeals}
-              >
-                <Text style={styles.findButtonText}>
-                  Find a Meal
-                </Text>
-              </Pressable>
+                style={styles.findButton}
+              />
             </View>
           )}
 
@@ -119,9 +152,16 @@ export function TodaysMealPlan({
 
                   {meal ? (
                     <Pressable
-                      style={styles.mealRow}
+                      style={({ pressed }) => [
+                        styles.mealRow,
+                        pressed && styles.pressed,
+                      ]}
                       onPress={() =>
                         onMealPress(meal.idMeal)
+                      }
+                      accessibilityRole="button"
+                      accessibilityLabel={
+                        `Open ${meal.strMeal}`
                       }
                     >
                       <Image
@@ -129,6 +169,7 @@ export function TodaysMealPlan({
                           uri: meal.strMealThumb,
                         }}
                         style={styles.image}
+                        accessible={false}
                       />
 
                       <Text
@@ -137,11 +178,24 @@ export function TodaysMealPlan({
                       >
                         {meal.strMeal}
                       </Text>
+
+                      <Ionicons
+                        name="chevron-forward"
+                        color={colors.textSecondary}
+                        size={20}
+                      />
                     </Pressable>
                   ) : (
                     <Pressable
-                      style={styles.emptySlot}
+                      style={({ pressed }) => [
+                        styles.emptySlot,
+                        pressed && styles.pressed,
+                      ]}
                       onPress={onFindMeals}
+                      accessibilityRole="button"
+                      accessibilityLabel={
+                        `Find a meal for ${formatSlot(slot)}`
+                      }
                     >
                       <Text
                         style={styles.emptySlotText}
@@ -149,9 +203,7 @@ export function TodaysMealPlan({
                         No meal planned
                       </Text>
 
-                      <Text
-                        style={styles.addMealText}
-                      >
+                      <Text style={styles.addMealText}>
                         Find meal
                       </Text>
                     </Pressable>
@@ -167,103 +219,146 @@ export function TodaysMealPlan({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffffff",
-    borderRadius: 16,
-    padding: 16,
+    backgroundColor: colors.surface,
+    borderRadius: radius.lg,
+    padding: spacing.lg,
+
+    ...shadows.card,
   },
+
   headingContainer: {
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 12,
+    marginBottom: spacing.md,
   },
+
   title: {
-    fontSize: 21,
-    fontWeight: "bold",
+    color: colors.text,
+    fontSize: fontSize.sectionTitle,
+    fontWeight: "700",
   },
+
   day: {
-    color: "#666666",
-    fontSize: 14,
-    marginTop: 2,
+    color: colors.textSecondary,
+    fontSize: fontSize.caption,
+    marginTop: spacing.xs,
   },
+
+  findMealsLink: {
+    alignItems: "center",
+    flexDirection: "row",
+    minHeight: 44,
+    paddingLeft: spacing.sm,
+  },
+
   findMealsText: {
-    color: "#d35400",
+    color: colors.primary,
     fontSize: 15,
     fontWeight: "600",
+    marginRight: spacing.xs,
   },
+
+  pressed: {
+    opacity: 0.7,
+  },
+
   loading: {
-    marginVertical: 24,
+    marginVertical: spacing.xl,
   },
+
   error: {
-    color: "#b00020",
-    marginBottom: 10,
+    color: colors.error,
+    marginBottom: spacing.md,
     textAlign: "center",
   },
+
   emptyContainer: {
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 20,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.xl,
   },
+
+  emptyIcon: {
+    alignItems: "center",
+    backgroundColor: colors.surfaceMuted,
+    borderRadius: radius.pill,
+    height: 58,
+    justifyContent: "center",
+    marginBottom: spacing.md,
+    width: 58,
+  },
+
   emptyTitle: {
-    fontSize: 18,
+    color: colors.text,
+    fontSize: fontSize.subtitle,
     fontWeight: "600",
   },
+
   emptyMessage: {
-    color: "#666666",
-    lineHeight: 20,
-    marginTop: 6,
+    color: colors.textSecondary,
+    lineHeight: 21,
+    marginTop: spacing.sm,
     textAlign: "center",
   },
+
   findButton: {
-    backgroundColor: "#d35400",
-    borderRadius: 8,
-    marginTop: 16,
-    paddingHorizontal: 18,
-    paddingVertical: 10,
+    marginTop: spacing.lg,
+    minWidth: 150,
   },
-  findButtonText: {
-    color: "#ffffff",
-    fontWeight: "600",
-  },
+
   slotContainer: {
-    borderTopColor: "#eeeeee",
+    borderTopColor: colors.border,
     borderTopWidth: 1,
-    paddingVertical: 12,
+    paddingVertical: spacing.md,
   },
+
   slotTitle: {
-    color: "#555555",
-    fontSize: 13,
-    fontWeight: "600",
-    marginBottom: 8,
+    color: colors.textSecondary,
+    fontSize: fontSize.caption,
+    fontWeight: "700",
+    marginBottom: spacing.sm,
     textTransform: "uppercase",
   },
+
   mealRow: {
     alignItems: "center",
     flexDirection: "row",
+    minHeight: 60,
   },
+
   image: {
-    borderRadius: 8,
-    height: 55,
-    width: 55,
+    backgroundColor: colors.surfaceMuted,
+    borderRadius: radius.sm,
+    height: 56,
+    width: 56,
   },
+
   mealName: {
+    color: colors.text,
     flex: 1,
-    fontSize: 16,
+    fontSize: fontSize.body,
     fontWeight: "500",
-    marginLeft: 12,
+    marginHorizontal: spacing.md,
   },
+
   emptySlot: {
     alignItems: "center",
+    backgroundColor: colors.surfaceMuted,
+    borderRadius: radius.sm,
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 8,
+    minHeight: 48,
+    paddingHorizontal: spacing.md,
   },
+
   emptySlotText: {
-    color: "#888888",
+    color: colors.textSecondary,
     fontStyle: "italic",
   },
+
   addMealText: {
-    color: "#d35400",
+    color: colors.primary,
     fontWeight: "600",
   },
 });
