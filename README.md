@@ -7,8 +7,8 @@ This portfolio project demonstrates mobile development, REST API integration, ty
 ### Screenshots
 
 | Home | Meal Details | Weekly Planner |
- ![Home screen](docs/screenshots/Homescreen.png) |
- ![Meal details screen](docs/screenshots/MeaaldetailsScreen.png) 
+ ![Home screen](docs/screenshots/HomeScreen.png) |
+ ![Meal details screen](docs/screenshots/MealScreenDetailP1.png)
  ![Weekly planner screen](docs/screenshots/WeeklyPlannerScreen.png) |
 
 Additional screenshots in: docs/screenshots
